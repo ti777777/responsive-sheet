@@ -1,33 +1,32 @@
 import { useState } from 'react'
-import ResponsiveSheet from './ResponsiveSheet'
-import './App.css'
+import Sheet from './Sheet';
+import "./App.css"
 
 function App() {
-  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <button
-        onClick={() => setIsSheetOpen(true)}
-        className="m-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      <Sheet
+        trigger={
+          <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Open Sheet
+          </button>
+        }
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
       >
-        開啟 Sheet
-      </button>
-
-      <ResponsiveSheet
-        isOpen={isSheetOpen}
-        onClose={() => setIsSheetOpen(false)}
-        title="我的響應式 Sheet"
-      >
-        <div className="py-4">
-          <p>這是一個響應式的 Sheet 組件</p>
-          <p>在小螢幕可以拖拉關閉</p>
-          <p>在大螢幕顯示為 Modal</p>
-          {Array.from({ length: 20 }).map((_, i) => (
-            <p key={i}>內容行 {i + 1}</p>
-          ))}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold">Sheet Content</h2>
+          <p>This is the content of the sheet.</p>
+          <button
+            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            onClick={() => setIsOpen(false)}
+          >
+            Close
+          </button>
         </div>
-      </ResponsiveSheet>
+      </Sheet>
     </div>
   );
 }
